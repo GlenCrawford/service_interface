@@ -31,6 +31,31 @@ TestService.execute(word: 'Ruby', suffix: 'Yay!')
 => 'Ruby, Ruby, Ruby, Ruby, Ruby, Yay!'
 ```
 
+The equivalent code, written without ServiceInterface, would look something like this:
+
+```ruby
+class TestService
+  def self.execute(word:, count: 5, suffix: nil)
+    new(
+      word: word,
+      count: count,
+      suffix: suffix
+    ).execute
+  end
+
+  def initialize(word:, count:, suffix:)
+    @word = word
+    @count = count
+    @suffix = suffix
+  end
+
+  def execute
+    (Array.new(@count, @word) << @suffix).compact.join(', ')
+  end
+end
+```
+
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/GlenCrawford/service_interface.
