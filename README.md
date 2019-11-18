@@ -7,7 +7,7 @@ A Ruby module that can be included into service classes that provides a strict, 
 Add the gem to your Gemfile:
 
 ```
-gem 'service_interface', git: 'git://github.com/GlenCrawford/service_interface.git'
+gem 'service_interface', '~> 1.0'
 ```
 
 Then create a service class, include the interface, and define the arguments, like so:
@@ -40,7 +40,7 @@ class TestService
       word: word,
       count: count,
       suffix: suffix
-    ).execute
+    ).send(:execute)
   end
 
   def initialize(word:, count:, suffix:)
@@ -48,6 +48,8 @@ class TestService
     @count = count
     @suffix = suffix
   end
+
+  private
 
   def execute
     (Array.new(@count, @word) << @suffix).compact.join(', ')
