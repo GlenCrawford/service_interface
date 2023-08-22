@@ -11,6 +11,8 @@ RSpec.describe ServiceInterface do
       def execute
         (Array.new(@count, @word) << @suffix).compact.join(', ')
       end
+
+      def post_initialize(arguments = {}); end
     end
   end
 
@@ -68,6 +70,13 @@ RSpec.describe ServiceInterface do
       it 'raises an error' do
         expect { service_instance.execute }.to raise_error(NoMethodError, /private method `execute' called/)
       end
+    end
+  end
+
+  describe '#post_initialize' do
+    it 'is called' do
+      expect_any_instance_of(TestService).to receive(:post_initialize)
+      TestService.execute(word: word, count: count)
     end
   end
 end
